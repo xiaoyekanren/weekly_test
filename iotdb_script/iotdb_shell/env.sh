@@ -1,0 +1,2 @@
+export iotdb_dir=/data/iotdb/rel12_wt/iotdb_shell/../iotdb_test/iotdb_12-28_4b50fa8/distribution/target/apache-iotdb-0.12.5-SNAPSHOT-server-bin/apache-iotdb-0.12.5-SNAPSHOT-server-bin/
+export PATH=/data/iotdb/rel12_wt/iotdb_shell/../iotdb_test/iotdb_12-28_4b50fa8/distribution/target/apache-iotdb-0.12.5-SNAPSHOT-server-bin/apache-iotdb-0.12.5-SNAPSHOT-server-bin/sbin:/home/cluster/jdk1.8.0_191/bin:/home/cluster/apache-maven-3.5.4/bin:/home/cluster/jdk1.8.0_191/bin:/home/cluster/apache-maven-3.5.4/bin:/usr/local/bin:/usr/bin
