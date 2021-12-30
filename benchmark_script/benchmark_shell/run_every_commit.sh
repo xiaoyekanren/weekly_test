@@ -7,7 +7,7 @@ remote_test="false"
 server_ip="172.20.70.2"
 user="cluster"
 #start_time=`date +%Y-%m-%d-%H-%M-%S`
-start_time="rel_12_test"
+start_time="pr4650_1"
 remote_str=""
 #iotdb 数据库所在机器
 result_path="${benchmark_shell_dir}/result"
@@ -27,5 +27,5 @@ do
     exit 1
   fi
   
-  ${benchmark_shell_dir}/run_weektest.sh "${remote_str}" ${server_test_dir} ${user} ${start_time}
+  ${benchmark_shell_dir}/run_weektest.sh "${remote_str}" ${server_test_dir} ${start_time}
 done

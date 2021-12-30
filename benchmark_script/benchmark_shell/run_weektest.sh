@@ -5,13 +5,12 @@ benchmark_result_dir=${benchmark_shell_dir}/../benchmark_result
 test_time=`date +%Y-%m-%d-%H-%M-%S`
 remote_str=$1
 server_test_dir=$2
-user=$3
 server_shell_dir="${server_test_dir}/iotdb_shell"
 every_iotdb_dir="${server_test_dir}/iotdb_test"
 time1=`date +%s`
 start_iotdb="true"
 #各版本测试结果$start_time_res.csv
-start_time=$4
+start_time=$3
 #获取本次测试的iotdb的commit_id,创建结果目录
 v_cmd="tail -1 ${server_shell_dir}/commit_id.txt"
 commit_id=`eval ${remote_str}"${v_cmd}"`
@@ -26,7 +25,7 @@ fi
 #iotdb 修改合并参数 清操作系统缓存 启动数据库
 
 eval ${remote_str}"${server_shell_dir}/set_compaction_strategy.sh LEVEL_COMPACTION"
-${benchmark_shell_dir}/iotdb_stop_clear_start.sh "${remote_str}" "$server_shell_dir" "${user}" ${benchmark_shell_dir}
+${benchmark_shell_dir}/iotdb_stop_clear_start.sh "${remote_str}" "$server_shell_dir" ${benchmark_shell_dir}
 #Benchmark copy 顺序写入的配置文件
 ${benchmark_shell_dir}/cp_bm_conf.sh "insert_no_overflow.config.properties"
 
@@ -40,7 +39,7 @@ ${benchmark_shell_dir}/write_fail_and_result.sh "${benchmark_result_dir}/${test_
 #backup config
 #${benchmark_shell_dir}/bk_bm_conf.sh "${benchmark_result_dir}/${test_result_path}" "insert_no_overflow.config.properties"
 #顺序写入测试完成 flush stop-iotdb 备份 清缓存  start-iotdb
-${benchmark_shell_dir}/iotdb_stop_bk_clear_param_start.sh "${remote_str}" "${server_shell_dir}" "${user}" "${benchmark_shell_dir}" "nooverflow_merge" "LEVEL_COMPACTION" "${start_iotdb}"
+${benchmark_shell_dir}/iotdb_stop_bk_clear_param_start.sh "${remote_str}" "${server_shell_dir}" "${benchmark_shell_dir}" "nooverflow_merge" "LEVEL_COMPACTION" "${start_iotdb}"
 
 #copy 乱序写入的conf
 ${benchmark_shell_dir}/cp_bm_conf.sh "insert_is_overflow.config.properties"
@@ -56,7 +55,7 @@ let line_num++
 #${benchmark_shell_dir}/bk_bm_conf.sh "${benchmark_result_dir}/${test_result_path}" "insert_is_overflow.config.properties"
 
 #乱序写入测试完成 flush stop-iotdb 备份 清缓存  start-iotdb
-${benchmark_shell_dir}/iotdb_stop_bk_clear_param_start.sh "${remote_str}" "${server_shell_dir}" "${user}" "${benchmark_shell_dir}" "isoverflow_merge" "LEVEL_COMPACTION" "${start_iotdb}"
+${benchmark_shell_dir}/iotdb_stop_bk_clear_param_start.sh "${remote_str}" "${server_shell_dir}" "${benchmark_shell_dir}" "isoverflow_merge" "LEVEL_COMPACTION" "${start_iotdb}"
 
 #顺序 读写混合测试
 
@@ -74,7 +73,7 @@ ${benchmark_shell_dir}/write_fail_and_result.sh "${benchmark_result_dir}/${test_
 ${benchmark_shell_dir}/bk_bm_conf.sh "${benchmark_result_dir}/${test_result_path}" "rw_no_overflow.config.properties"
 
 #混合顺序测试完成 flush stop-iotdb 备份 清缓存  start-iotdb
-${benchmark_shell_dir}/iotdb_stop_bk_clear_param_start.sh "${remote_str}" "${server_shell_dir}" "${user}" "${benchmark_shell_dir}" "rw_nooverflow_merge" "LEVEL_COMPACTION" "${start_iotdb}"
+${benchmark_shell_dir}/iotdb_stop_bk_clear_param_start.sh "${remote_str}" "${server_shell_dir}" "${benchmark_shell_dir}" "rw_nooverflow_merge" "LEVEL_COMPACTION" "${start_iotdb}"
 
 #乱序 读写混合测试
 
@@ -92,7 +91,7 @@ ${benchmark_shell_dir}/bk_bm_conf.sh "${benchmark_result_dir}/${test_result_path
 
 start_iotdb="false"
 #混合乱序测试完成 flush stop-iotdb 备份 清缓存  start-iotdb
-${benchmark_shell_dir}/iotdb_stop_bk_clear_param_start.sh "${remote_str}" "${server_shell_dir}" "${user}" "${benchmark_shell_dir}" "rw_isoverflow_merge" "NO_COMPACTION" "${start_iotdb}"
+${benchmark_shell_dir}/iotdb_stop_bk_clear_param_start.sh "${remote_str}" "${server_shell_dir}" "${benchmark_shell_dir}" "rw_isoverflow_merge" "NO_COMPACTION" "${start_iotdb}"
 
 
 #iotdb copy data_isoverflow_nomerge 到$iotdb/data
@@ -109,7 +108,7 @@ function  exec_query(){
 
     #echo $i
     #重启iotdb服务
-    ${benchmark_shell_dir}/iotdb_stop_clear_start.sh "${remote_str}" "$server_shell_dir"  "${user}" "${benchmark_shell_dir}"
+    ${benchmark_shell_dir}/iotdb_stop_clear_start.sh "${remote_str}" "$server_shell_dir"  "${benchmark_shell_dir}"
     #copy 本次测试的config
     ${benchmark_shell_dir}/cp_bm_conf.sh "${conf}.config.properties"
     #执行第1遍查询
