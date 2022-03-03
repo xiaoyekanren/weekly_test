@@ -1,6 +1,6 @@
 DIR="$( cd "$( dirname "$0"  )" && pwd  )"
 . $DIR/env.sh
-iotdb_version=`grep "enable_seq_space_compaction=" conf/iotdb-engine.properties |wc -l`
+iotdb_version=`grep "enable_seq_space_compaction=" ${iotdb_dir}/conf/iotdb-engine.properties |wc -l`
 
 if [ "${iotdb_version}" = "1" ]; then
   if [ "$1" = "LEVEL_COMPACTION" ];then
