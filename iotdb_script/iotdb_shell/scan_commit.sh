@@ -36,8 +36,10 @@ mvn_package()
 set_env()
 {
   #获取server的安装路径,设置环境变量
-  sbin_dir=`find ${iotdb_soft_dir}/iotdb_${commit_id}/distribution/target/ -name sbin|grep "SNAPSHOT-server-bin"`
-  iotdb_dir=`echo "${sbin_dir}"|awk -F 'sbin' '{print $1}'`
+  # sbin_dir=`find ${iotdb_soft_dir}/iotdb_${commit_id}/distribution/target/ -name sbin|grep "SNAPSHOT-server-bin"`
+  # iotdb_dir=`echo "${sbin_dir}"|awk -F 'sbin' '{print $1}'`
+  sbin_dir=/home/cluster/standalone_0.13/iotdb-0.13.1-0608-407d4bb1c0/sbin
+  iotdb_dir=/home/cluster/standalone_0.13/iotdb-0.13.1-0608-407d4bb1c0
   . ~/.bashrc
   echo "export iotdb_dir=$iotdb_dir" > ${DIR}/env.sh
   echo "export PATH=${sbin_dir}:$PATH" >> ${DIR}/env.sh
@@ -70,4 +72,5 @@ git_pull()
   done 
 }
 #调用
-git_pull
+# git_pull
+set_env
